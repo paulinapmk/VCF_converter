@@ -93,3 +93,6 @@ Deletions: 0
 ```
 
 - a file called *invalid\_files.txt*, containing all the file names in vcf, which were not correctly created or with sequence length less than 1 nucleotide
+
+### Licence
+This project is licensed under the MIT License - see the [LICENSE] (LICENSE.md) file for details
