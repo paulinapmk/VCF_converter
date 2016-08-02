@@ -2,6 +2,7 @@ __author__ = 'Paulina Kania'
 
 import os
 import parser
+import random
 
 options = parser.parser()
 input_type = options.input_type
@@ -72,7 +73,10 @@ def getPhases(splited_input, index):
         dp = 0
         if 'GQ' in format:
             gq_index = format.split(':').index('GQ')
-            gq = int(genotypes[index].split(':')[gq_index])
+            try:
+                gq = int(genotypes[index].split(':')[gq_index])
+            except:
+                gq = './.'
         if 'DP' in format:
             dp_index = format.split(':').index('DP')
             try:
@@ -126,15 +130,17 @@ def getPhases(splited_input, index):
                         outA += alt[1]
                         outB += alt[1]
                     elif gt == '0/2':
-                        outA += ref.lower()
-                        outB += alt[1].lower()
+                        varts = random.sample([ref.lower(),alt[1].lower()],2)
+                        outA += varts[0]        #ref.lower()
+                        outB += varts[1]        #alt[1].lower()
                         lowercase_counter += 1
                         two_alt_counter += 1
                         heterozygotic_sites += 1
                         not_phased_sites += 1
                     elif gt == '1/2':
-                        outA += alt[0].lower()
-                        outB += alt[1].lower()
+                        varts = random.sample([alt[0].lower(),alt[1].lower()],2)
+                        outA += varts[0]        #alt[0].lower()
+                        outB += varts[1]        #alt[1].lower()
                         lowercase_counter += 1
                         two_alt_counter += 1
                         heterozygotic_sites += 1
@@ -159,8 +165,9 @@ def getPhases(splited_input, index):
                             heterozygotic_sites += 1
                             phased_sites += 1
                         else: # if not phased for other reason than because it is the first
-                            outA += ref.lower()
-                            outB += alt[0].lower()
+                            varts = random.sample([ref.lower(),alt[0].lower()],2)
+                            outA += varts[0]        #ref.lower()
+                            outB += varts[1]        #alt[0].lower()
                             lowercase_counter += 1
                             not_phased_sites += 1
                     elif gt == './.':
